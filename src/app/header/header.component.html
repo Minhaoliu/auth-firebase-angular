@@ -1,14 +1,14 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
-<a class="navbar-brand">LOGO</a>
-<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+  <img class="navbar-brand" src="https://stickershop.line-scdn.net/stickershop/v1/product/5142465/LINEStorePC/main.png;compress=true" alt="" width="30">
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
   <span class="navbar-toggler-icon"></span>
 </button>
 
-<div class="collapse navbar-collapse" id="navbarSupportedContent">
-  <div class="mr-auto"></div>
-  <a class="nav-link" routerLinkActive="active" routerLink="landing">Landing</a>
-  <a class="nav-link" *ngIf="!isLoggedIn" routerLinkActive="active" routerLink="login">Login</a>
-  <a class="nav-link" routerLinkActive="active" routerLink="signup">Sign Up</a>
-  <a class="nav-link" *ngIf="isLoggedIn" (click)="signOut()">Sign Out</a>
-</div>
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <div class="mr-auto"></div>
+    <a class="nav-link" routerLinkActive="active" routerLink="landing">Landing</a>
+    <a class="nav-link" *ngIf="!isLoggedIn" routerLinkActive="active" routerLink="login">Login</a>
+    <a class="nav-link" routerLinkActive="active" routerLink="signup">Sign Up</a>
+    <a class="nav-link" *ngIf="isLoggedIn" (click)="signOut()">Sign Out</a>
+  </div>
 </nav>
