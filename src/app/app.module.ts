@@ -9,11 +9,13 @@ import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
 import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
+import { CommonModule } from '@angular/common';
 
 
 @NgModule({
   imports:      [ 
     BrowserModule,
+    CommonModule,
     FormsModule,
     HttpClientModule,
     AppRoutingModule
