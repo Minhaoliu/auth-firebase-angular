@@ -8,6 +8,11 @@ import { SignUpComponent } from './sign-up/sign-up.component';
 const routes: Routes = [
   {
     path: '',
+    pathMatch: 'full',
+    redirectTo: 'landing'
+  },
+  {
+    path: 'landing',
     component: LandingComponent
   },
   {
