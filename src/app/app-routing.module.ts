@@ -6,15 +6,15 @@ import { AuthGuard } from './shared/auth/auth.guard';
 import { SignUpComponent } from './sign-up/sign-up.component';
 
 const routes: Routes = [
-  // {
-  //   path: '',
-  //   pathMatch: 'full',
-  //   redirectTo: 'landing'
-  // },
+  {
+    path: '',
+    pathMatch: 'full',
+    redirectTo: 'landing'
+  },
   {
     path: 'landing',
     component: LandingComponent,
-    canActivate: [AuthGuard]
+    // canActivate: [AuthGuard]
   },
   {
     path: 'login',
