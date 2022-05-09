@@ -10,6 +10,7 @@ import { AuthService } from '../shared/auth/auth.service';
 })
 export class LoginComponent implements OnInit {
 
+  isLoggedIn: boolean;
   errorMessage: string = '';
   email: string;
   password: string;
@@ -20,6 +21,11 @@ export class LoginComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.authService.user.subscribe(res => {
+      if(!!res) {
+        this.router.navigate(['landing']);
+      }
+    })
   }
 
   login(form: NgForm) {

@@ -61,6 +61,17 @@ export class AuthService {
     this.user.next(null);
   }
 
+  autoLogin() {
+    const localUserData = JSON.parse(localStorage.getItem('userData'));
+    if(!!localUserData) {
+      this.user.next(localUserData)
+    }
+  }
+
+  autoLogOut() {
+
+  }
+
   handleError(errorResp: HttpErrorResponse): Observable<never> {
     console.log(errorResp)
     return throwError(() => {
