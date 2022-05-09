@@ -10,6 +10,7 @@ import { FooterComponent } from './footer/footer.component';
 import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { CommonModule } from '@angular/common';
+import { LandingComponent } from './landing/landing.component';
 
 
 @NgModule({
@@ -25,7 +26,8 @@ import { CommonModule } from '@angular/common';
     SignUpComponent,
     LoginComponent,
     HeaderComponent,
-    FooterComponent
+    FooterComponent,
+    LandingComponent
   ],
   bootstrap:    [ AppComponent ]
 })
