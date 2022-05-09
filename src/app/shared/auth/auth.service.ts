@@ -1,7 +1,11 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { BehaviorSubject, Observable, throwError } from 'rxjs';
+import { catchError, tap } from 'rxjs/operators';
+import { UserModel } from './user.model';
 
 export interface AuthResponseData {
+  displayName: string;
   idToken: string;
   email: string;
   refreshToken: string;
@@ -12,6 +16,8 @@ export interface AuthResponseData {
 
 @Injectable({providedIn: 'root'})
 export class AuthService {
+
+  user = new BehaviorSubject<UserModel>(null);
 
   constructor(
     private http: HttpClient
@@ -39,6 +45,46 @@ export class AuthService {
           returnSecureToken: true,
         }
       )
+      .pipe(
+        catchError(this.handleError),
+        tap(res => {
+          const expirationDate = new Date(new Date().getTime() + +res.expiresIn * 1000);
+          const user = new UserModel(res.email, res.displayName, expirationDate, res.idToken);
+          localStorage.setItem('userData', JSON.stringify(user));
+          this.user.next(user);
+        })
+      )
+  }
+
+  signOut() {
+    localStorage.removeItem('userData');
+    this.user.next(null);
+  }
+
+  handleError(errorResp: HttpErrorResponse): Observable<never> {
+    console.log(errorResp)
+    return throwError(() => {
+      let errorText = 'Unknown Error';
+      if (!errorResp.error || !errorResp.error.error) {
+        return new Error(errorText);
+      }
+      switch(errorResp.error.error.message) {
+        case "INVALID_EMAIL":
+          errorText = 'The email address is badly formatted.';
+          break;
+        case "EMAIL_NOT_FOUND":
+          errorText = 'There is no user record corresponding to this identifier. The user may have been deleted.';
+          break;
+        case "INVALID_PASSWORD":
+          errorText = 'The password is invalid or the user does not have a password.';
+          break;
+        case "USER_DISABLED":
+          errorText = 'The user account has been disabled by an administrator.';
+          break;
+      }
+
+      return errorText;
+    })
   }
 
 }

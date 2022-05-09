@@ -1,5 +1,5 @@
 <div class="login-form-wrapper">
-  <div *ngIf="loginError" class="error-msg">{{ errorMessage }}</div>
+  <div *ngIf="errorMessage.length > 0" class="error-msg">{{ errorMessage }}</div>
   <form #userForm="ngForm" (ngSubmit)="login(userForm)">
     <div class="form-group">
       <label for="email">Email address</label>

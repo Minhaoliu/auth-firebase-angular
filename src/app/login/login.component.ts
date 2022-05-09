@@ -10,8 +10,7 @@ import { AuthService } from '../shared/auth/auth.service';
 })
 export class LoginComponent implements OnInit {
 
-  loginError: boolean = false;
-  errorMessage: string;
+  errorMessage: string = '';
   email: string;
   password: string;
 
@@ -30,11 +29,9 @@ export class LoginComponent implements OnInit {
     const email = form.value.email;
     const password = form.value.password;
     this.authService.login(email, password).subscribe(res => {
-      this.loginError = false;
       this.router.navigate(['landing']);
     }, err => {
-      this.loginError = true;
-      this.errorMessage = err.error.error.errors[0].message;
+      this.errorMessage = err;
     })
   }
 
