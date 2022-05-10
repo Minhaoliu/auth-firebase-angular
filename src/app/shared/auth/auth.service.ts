@@ -1,8 +1,7 @@
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Router } from '@angular/router';
-import { BehaviorSubject, Observable, throwError } from 'rxjs';
-import { catchError, tap } from 'rxjs/operators';
+import { BehaviorSubject, Observable, of, throwError } from 'rxjs';
+import { catchError, distinctUntilChanged, mergeMap, take, tap } from 'rxjs/operators';
 import { UserModel } from './user.model';
 
 export interface AuthResponseData {
@@ -19,12 +18,20 @@ export interface AuthResponseData {
 export class AuthService {
 
   user = new BehaviorSubject<UserModel>(null);
-tokenExpireTime: number;
+  tokenExpireTime: number;
 
   constructor(
     private http: HttpClient,
-    private router: Router
   ) { }
+
+
+  getLoginInfo():Observable<UserModel> {
+    const found = JSON.parse(localStorage.getItem('userData'));
+    if(found) {
+      return found;
+    }
+  }
+
 
   signUp(email: string, password: string) {
     return this.http
@@ -67,13 +74,24 @@ tokenExpireTime: number;
 
   autoLogin() {
     const localUserData = JSON.parse(localStorage.getItem('userData'));
+
+    if(!localUserData){
+      return
+    }
+    const loadedUser = new UserModel(
+      localUserData.email,
+      localUserData.id,
+      new Date(localUserData.expiresIn),
+      localUserData.idToken,
+    );
+
     if(!!localUserData) {
-      this.user.next(localUserData);
+      this.user.next(loadedUser);
       const newExpirationCountDown = new Date(localUserData.expiresIn).getTime() - new Date().getTime();
       clearTimeout(this.tokenExpireTime);
       this.autoLogOut(newExpirationCountDown);
     } else {
-      this.router.navigate(['login']);
+      // this.router.navigate(['login']);
     }
   }
 

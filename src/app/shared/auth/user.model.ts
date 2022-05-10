@@ -12,4 +12,5 @@ export class UserModel {
     }
     return this.idToken;
   }
+
 }
