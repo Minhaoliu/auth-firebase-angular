@@ -5,4 +5,11 @@ export class UserModel {
     private expiresIn: Date,
     private idToken: string,
   ) {}
+
+  get token() {
+    if (!this.idToken) {
+      return null;
+    }
+    return this.idToken;
+  }
 }

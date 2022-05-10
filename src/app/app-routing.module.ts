@@ -14,7 +14,7 @@ const routes: Routes = [
   {
     path: 'landing',
     component: LandingComponent,
-    // canActivate: [AuthGuard]
+    canActivate: [AuthGuard]
   },
   {
     path: 'login',
