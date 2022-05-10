@@ -8,7 +8,7 @@
     <div class="mr-auto"></div>
     <a class="nav-link" routerLinkActive="active" routerLink="landing">Landing</a>
     <a class="nav-link" *ngIf="!isLoggedIn" routerLinkActive="active" routerLink="login">Login</a>
-    <a class="nav-link" routerLinkActive="active" routerLink="signup">Sign Up</a>
+    <a class="nav-link" *ngIf="!isLoggedIn" routerLinkActive="active" routerLink="signup">Sign Up</a>
     <a class="nav-link" *ngIf="isLoggedIn" (click)="signOut()">Sign Out</a>
   </div>
 </nav>

@@ -19,13 +19,14 @@ export class LandingComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.authService.getLoginInfo().subscribe(info => console.log(info))
-    // this.productService.getAllProducts().subscribe((resp) => {
-    //     if(!!resp) {
-    //       this.isLoggedIn = true; 
-    //     }
-    //   }
-    // );
+    this.authService.$user.subscribe(user => {
+      if(user) {
+        this.isLoggedIn = true;
+        this.productService.getAllProducts().subscribe();
+      } else {
+        this.isLoggedIn = false;
+      }
+    });
   }
 
 }

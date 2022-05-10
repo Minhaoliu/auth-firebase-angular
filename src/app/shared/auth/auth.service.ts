@@ -1,5 +1,6 @@
 import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 import { BehaviorSubject, Observable, of, throwError } from 'rxjs';
 import { catchError, distinctUntilChanged, mergeMap, take, tap } from 'rxjs/operators';
 import { UserModel } from './user.model';
@@ -18,18 +19,25 @@ export interface AuthResponseData {
 export class AuthService {
 
   user = new BehaviorSubject<UserModel>(null);
+  get $user() {
+    return this.user.asObservable().pipe(
+      distinctUntilChanged()
+    )
+  }
   tokenExpireTime: number;
 
   constructor(
     private http: HttpClient,
+    private router: Router
   ) { }
 
 
-  getLoginInfo():Observable<UserModel> {
+  getLoginInfo(): Observable<any> {
     const found = JSON.parse(localStorage.getItem('userData'));
     if(found) {
-      return found;
+      return of(found);
     }
+    return of(null);
   }
 
 
@@ -91,7 +99,7 @@ export class AuthService {
       clearTimeout(this.tokenExpireTime);
       this.autoLogOut(newExpirationCountDown);
     } else {
-      // this.router.navigate(['login']);
+      this.router.navigate(['login']);
     }
   }
 
